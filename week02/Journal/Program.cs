@@ -5,8 +5,7 @@ using System.IO;
 class Program
 {
     static void Main(string[] args)
-    {
-        {
+   {
         Journal journal = new Journal();
         bool running = true;
         
@@ -15,9 +14,11 @@ class Program
             Console.WriteLine("\nJournal Program");
             Console.WriteLine("1. Write a new entry");
             Console.WriteLine("2. Display journal");
-            Console.WriteLine("3. Save journal to file");
-            Console.WriteLine("4. Load journal from file");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("3. Search entries");
+            Console.WriteLine("4. Delete an entry");
+            Console.WriteLine("5. Save journal to file");
+            Console.WriteLine("6. Load journal from file");
+            Console.WriteLine("7. Exit");
             Console.Write("Select an option: ");
             
             string choice = Console.ReadLine();
@@ -30,16 +31,28 @@ class Program
                     journal.DisplayJournal();
                     break;
                 case "3":
+                    Console.Write("Enter a keyword to search: ");
+                    string keyword = Console.ReadLine();
+                    journal.SearchEntries(keyword);
+                    break;
+                case "4":
+                    Console.Write("Enter the entry number to delete: ");
+                    if (int.TryParse(Console.ReadLine(), out int index))
+                        journal.DeleteEntry(index);
+                    else
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    break;
+                case "5":
                     Console.Write("Enter filename to save: ");
                     string saveFile = Console.ReadLine();
                     journal.SaveToFile(saveFile);
                     break;
-                case "4":
+                case "6":
                     Console.Write("Enter filename to load: ");
                     string loadFile = Console.ReadLine();
                     journal.LoadFromFile(loadFile);
                     break;
-                case "5":
+                case "7":
                     running = false;
                     break;
                 default:
@@ -48,94 +61,4 @@ class Program
             }
         }
     }
-}
-
-class Journal
-{
-    private List<Entry> entries = new List<Entry>();
-    private static readonly List<string> prompts = new List<string>
-    {
-        "Who was the most interesting person I interacted with today?",
-        "What was the best part of my day?",
-        "How did I see the hand of the Lord in my life today?",
-        "What was the strongest emotion I felt today?",
-        "If I had one thing I could do over today, what would it be?"
-    };
-
-    public void WriteEntry()
-    {
-        Random rand = new Random();
-        string prompt = prompts[rand.Next(prompts.Count)];
-        
-        Console.WriteLine("\nPrompt: " + prompt);
-        Console.Write("Your response: ");
-        string response = Console.ReadLine();
-        
-        entries.Add(new Entry(DateTime.Now.ToString("yyyy-MM-dd"), prompt, response));
-        Console.WriteLine("Entry saved!");
-    }
-
-    public void DisplayJournal()
-    {
-        if (entries.Count == 0)
-        {
-            Console.WriteLine("No journal entries found.");
-            return;
-        }
-        
-        foreach (var entry in entries)
-        {
-            Console.WriteLine($"\nDate: {entry.Date}\nPrompt: {entry.Prompt}\nResponse: {entry.Response}\n");
-        }
-    }
-
-    public void SaveToFile(string filename)
-    {
-        using (StreamWriter writer = new StreamWriter(filename))
-        {
-            foreach (var entry in entries)
-            {
-                writer.WriteLine($"{entry.Date}|{entry.Prompt}|{entry.Response}");
-            }
-        }
-        Console.WriteLine("Journal saved successfully.");
-    }
-
-    public void LoadFromFile(string filename)
-    {
-        if (!File.Exists(filename))
-        {
-            Console.WriteLine("File not found.");
-            return;
-        }
-
-        entries.Clear();
-        string[] lines = File.ReadAllLines(filename);
-        foreach (var line in lines)
-        {
-            string[] parts = line.Split('|');
-            if (parts.Length == 3)
-            {
-                entries.Add(new Entry(parts[0], parts[1], parts[2]));
-            }
-        }
-        Console.WriteLine("Journal loaded successfully.");
-    }
-}
-
-class Entry
-{
-    public string Date { get; }
-    public string Prompt { get; }
-    public string Response { get; }
-
-    public Entry(string date, string prompt, string response)
-    {
-        Date = date;
-        Prompt = prompt;
-        Response = response;
-    }
-}
-
-    
 }
