@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+
+public class GratitudeActivity : Activity
+{
+    private List<string> gratitudePrompts;
+
+    public GratitudeActivity() : base("Gratitude Activity", "This activity will help you focus on things you're grateful for.")
+    {
+        gratitudePrompts = new List<string>
+        {
+            "What is something you're grateful for today?",
+            "Who is someone in your life that you're thankful for?",
+            "What positive experiences have you had recently?"
+        };
+    }
+
+    public override void Run()
+    {
+        DisplayStartingMessage();
+        Random rand = new Random();
+        string prompt = gratitudePrompts[rand.Next(gratitudePrompts.Count)];
+
+        Console.WriteLine($"\n{prompt}\n");
+        ShowSpinner(5);
+
+        // Collect responses
+        Console.WriteLine("\nPlease reflect on the prompt and write down your response below:");
+        string response = Console.ReadLine();
+
+        // Display gratitude message
+        Console.WriteLine("\nThank you for reflecting on your gratitude! Keep this feeling with you throughout the day.");
+        DisplayEndingMessage();
+    }
+}
+
+public class GratitudeActivity : Activity
+{
+    public GratitudeActivity() : base("Gratitude Activity",
+        "Write down things you’re grateful for to boost your mood.") { }
+
+    public override void Run()
+    {
+        DisplayStartingMessage();
+        Console.WriteLine("Start listing things you're grateful for. Type 'done' to finish.");
+
+        List<string> items = new List<string>();
+        string input;
+        do
+        {
+            Console.Write("> ");
+            input = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(input) && input.ToLower() != "done")
+                items.Add(input);
+        } while (input.ToLower() != "done");
+
+        File.AppendAllLines("gratitude_log.txt", items.Select(i => $"{DateTime.Now}: {i}"));
+        Console.WriteLine($"\n💖 You listed {items.Count} things you're grateful for.");
+        DisplayEndingMessage();
+    }
+}
