@@ -1,19 +1,14 @@
 public class NegativeGoal : Goal
 {
-    public NegativeGoal(string name, string description, int penalty)
-        : base(name, description, -penalty) { }
+    public NegativeGoal(string name, string description, int penaltyPoints)
+        : base(name, description, -penaltyPoints) {}
 
-    public override int RecordEvent() => Points;
+    public override int RecordEvent() => Points;  // Negative value
 
     public override bool IsComplete() => false;
 
-    public override string GetDetails()
-    {
-        return $"[!] {Name} ({Description}) -- Avoid this to keep points";
-    }
+    public override string GetStatus() => "[⚠️ Bad Habit]";
 
-    public override string GetSaveString()
-    {
-        return $"NegativeGoal:{Name},{Description},{-Points}";
-    }
+    public override string GetStringRepresentation()
+        => $"Negative:{Name},{Description},{Points}";
 }

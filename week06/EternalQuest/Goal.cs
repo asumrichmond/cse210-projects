@@ -2,7 +2,7 @@ public abstract class Goal
 {
     private string _name;
     private string _description;
-    protected int _points;
+    private int _points;
 
     public Goal(string name, string description, int points)
     {
@@ -17,6 +17,6 @@ public abstract class Goal
 
     public abstract int RecordEvent();
     public abstract bool IsComplete();
-    public abstract string GetDetails();
-    public abstract string GetSaveString();
+    public abstract string GetStatus();
+    public abstract string GetStringRepresentation();
 }
