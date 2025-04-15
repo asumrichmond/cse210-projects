@@ -21,7 +21,9 @@ class Program
             Console.WriteLine("4. Save Goals");
             Console.WriteLine("5. Load Goals");
             Console.WriteLine("6. Quit");
-            Console.Write("Choose an option: ");
+            Console.WriteLine("\n=== Choose an option ===");
+            /*Console.Write("Choose an option: ");*/
+
 
             switch (Console.ReadLine())
             {
@@ -47,10 +49,15 @@ class Program
 
     static void CreateGoal(GoalManager manager)
     {
-        Console.WriteLine("Goal Types: 1) Simple  2) Eternal  3) Checklist  4) Negative");
+        Console.WriteLine("\n=== what type of Goal you wish to creat ===");
+        Console.WriteLine("1) Simple ");
+        Console.WriteLine("2) Eternal ");
+        Console.WriteLine("3) Checklist ");
+        Console.WriteLine("4) Negative ");
+        Console.WriteLine("Choose an option: ");
         string type = Console.ReadLine();
-        Console.Write("Name: "); string name = Console.ReadLine();
-        Console.Write("Description: "); string desc = Console.ReadLine();
+        Console.Write("What is the Name of your Goal: "); string name = Console.ReadLine();
+        Console.Write("What is the short Description of it: "); string desc = Console.ReadLine();
         Console.Write("Points: "); int pts = int.Parse(Console.ReadLine());
 
         switch (type)
