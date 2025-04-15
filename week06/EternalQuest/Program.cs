@@ -27,6 +27,7 @@ class Program
 
             switch (Console.ReadLine())
             {
+                
                 case "1": CreateGoal(manager); break;
                 case "2": manager.DisplayGoals(); break;
                 case "3":
@@ -43,9 +44,13 @@ class Program
                     manager.LoadGoals(Console.ReadLine());
                     break;
                 case "6": running = false; break;
+                case "7":
+                     manager.ListGoals();break;
+
             }
         }
     }
+    
 
     static void CreateGoal(GoalManager manager)
     {

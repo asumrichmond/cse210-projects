@@ -20,6 +20,7 @@ public class GoalManager
     {
         _level = (_score / 1000) + 1;
     }
+    
 
     public void DisplayGoals()
     {
@@ -33,6 +34,19 @@ public class GoalManager
     {
         Console.WriteLine($"Score: {_score} pts | Level: {_level}");
     }
+    public void ListGoals()
+    {
+        Console.WriteLine("Your Goals:");
+        int index = 1;
+        foreach (Goal goal in _goals)
+        {
+            Console.WriteLine($"{index}. {goal.GetStatus()}");
+            index++;
+        }
+    }
+    
+    
+
 
     public void SaveGoals(string filename)
     {
